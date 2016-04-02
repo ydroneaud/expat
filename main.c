@@ -18,7 +18,7 @@
 #define HASHLEN 8
 
 
-extern void siphash( uint8_t *out, const uint8_t *in, uint64_t inlen, const uint8_t *k );
+extern void siphash( void *out, const void *in, uint64_t inlen, const void *k );
 
 /*
    SipHash-2-4 output with

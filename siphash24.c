@@ -56,18 +56,21 @@
     v2 = ROTL(v2, 32);                                                         \
   } while (0)
 
-void siphash(uint8_t *out, const uint8_t *in, uint64_t inlen, const uint8_t *k) {
+void siphash(void *out, const void *in, uint64_t inlen, const void *key) {
   /* "somepseudorandomlygeneratedbytes" */
   uint64_t v0 = 0x736f6d6570736575ULL;
   uint64_t v1 = 0x646f72616e646f6dULL;
   uint64_t v2 = 0x6c7967656e657261ULL;
   uint64_t v3 = 0x7465646279746573ULL;
   uint64_t b;
+  const uint8_t *k = (const uint8_t *)key;
   uint64_t k0 = U8TO64_LE(k);
   uint64_t k1 = U8TO64_LE(k + 8);
   uint64_t m;
   int i;
-  const uint8_t *end = in + inlen - (inlen % sizeof(uint64_t));
+  const uint8_t *inp = (const uint8_t *)in;
+  uint8_t *outp = (uint8_t *)out;
+  const uint8_t *end = inp + inlen - (inlen % sizeof(uint64_t));
   const int left = inlen & 7;
   b = ((uint64_t)inlen) << 56;
   v3 ^= k1;
@@ -75,8 +78,8 @@ void siphash(uint8_t *out, const uint8_t *in, uint64_t inlen, const uint8_t *k) 
   v1 ^= k1;
   v0 ^= k0;
 
-  for (; in != end; in += 8) {
-    m = U8TO64_LE(in);
+  for (; inp != end; inp += 8) {
+    m = U8TO64_LE(inp);
     v3 ^= m;
 
     for (i = 0; i < cROUNDS; ++i)
@@ -87,19 +90,19 @@ void siphash(uint8_t *out, const uint8_t *in, uint64_t inlen, const uint8_t *k) 
 
   switch (left) {
   case 7:
-    b |= ((uint64_t)in[6]) << 48;
+    b |= ((uint64_t)inp[6]) << 48;
   case 6:
-    b |= ((uint64_t)in[5]) << 40;
+    b |= ((uint64_t)inp[5]) << 40;
   case 5:
-    b |= ((uint64_t)in[4]) << 32;
+    b |= ((uint64_t)inp[4]) << 32;
   case 4:
-    b |= ((uint64_t)in[3]) << 24;
+    b |= ((uint64_t)inp[3]) << 24;
   case 3:
-    b |= ((uint64_t)in[2]) << 16;
+    b |= ((uint64_t)inp[2]) << 16;
   case 2:
-    b |= ((uint64_t)in[1]) << 8;
+    b |= ((uint64_t)inp[1]) << 8;
   case 1:
-    b |= ((uint64_t)in[0]);
+    b |= ((uint64_t)inp[0]);
     break;
   case 0:
     break;
@@ -118,7 +121,7 @@ void siphash(uint8_t *out, const uint8_t *in, uint64_t inlen, const uint8_t *k) 
     SIPROUND;
 
   b = v0 ^ v1 ^ v2 ^ v3;
-  U64TO8_LE(out, b);
+  U64TO8_LE(outp, b);
 
   return;
 }

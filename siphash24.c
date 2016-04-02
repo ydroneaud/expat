@@ -59,10 +59,10 @@
 
 void siphash(void *out, const void *in, size_t inlen, const void *key) {
   /* "somepseudorandomlygeneratedbytes" */
-  uint64_t v0 = 0x736f6d6570736575ULL;
-  uint64_t v1 = 0x646f72616e646f6dULL;
-  uint64_t v2 = 0x6c7967656e657261ULL;
-  uint64_t v3 = 0x7465646279746573ULL;
+  uint64_t v0 = UINT64_C(0x736f6d6570736575);
+  uint64_t v1 = UINT64_C(0x646f72616e646f6d);
+  uint64_t v2 = UINT64_C(0x6c7967656e657261);
+  uint64_t v3 = UINT64_C(0x7465646279746573);
   uint64_t b;
   const uint8_t *k = (const uint8_t *)key;
   uint64_t k0 = U8TO64_LE(k);

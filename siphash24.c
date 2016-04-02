@@ -14,6 +14,7 @@
    this software. If not, see
    <http://creativecommons.org/publicdomain/zero/1.0/>.
  */
+#include <stddef.h>
 #include <stdint.h>
 
 /* default: SipHash-2-4 */
@@ -56,7 +57,7 @@
     v2 = ROTL(v2, 32);                                                         \
   } while (0)
 
-void siphash(void *out, const void *in, uint64_t inlen, const void *key) {
+void siphash(void *out, const void *in, size_t inlen, const void *key) {
   /* "somepseudorandomlygeneratedbytes" */
   uint64_t v0 = 0x736f6d6570736575ULL;
   uint64_t v1 = 0x646f72616e646f6dULL;
@@ -71,7 +72,7 @@ void siphash(void *out, const void *in, uint64_t inlen, const void *key) {
   const uint8_t *inp = (const uint8_t *)in;
   uint8_t *outp = (uint8_t *)out;
   const uint8_t *end = inp + inlen - (inlen % sizeof(uint64_t));
-  const int left = inlen & 7;
+  const size_t left = inlen & 7;
   b = ((uint64_t)inlen) << 56;
   v3 ^= k1;
   v2 ^= k0;

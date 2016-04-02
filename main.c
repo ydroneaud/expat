@@ -9,6 +9,7 @@
    this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
  */
 
+#include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
@@ -18,7 +19,7 @@
 #define HASHLEN 8
 
 
-extern void siphash( void *out, const void *in, uint64_t inlen, const void *k );
+extern void siphash( void *out, const void *in, size_t inlen, const void *k );
 
 /*
    SipHash-2-4 output with

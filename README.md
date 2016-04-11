@@ -13,42 +13,6 @@ SipHash was designed by [Jean-Philippe Aumasson](https://131002.net) and
 [Daniel J. Bernstein](http://cr.yp.to). 
 
 
-Usage
------
-
-Running
-
-```sh
-  make
-```
-
-will build sanity checks (test vectors) for SipHash-2-4, the default
-version of SipHash:
-
-```C
-  ./siphash24_test
-```
-
-verifies 64 test vectors, and
-
-```C
-  ./siphash24_debug
-```
-
-does the same and prints intermediate values.
-
-The code can be adapted to implement SipHash-*c*-*d*, the version of SipHash
-with *c* compression rounds and *d* finalization rounds, by tweaking the
-lines
-```C
-#define cROUNDS 2
-#define dROUNDS 4
-```
-
-Obviously, if the number of rounds is modified then the test vectors
-won't verify.
-
-
 Intellectual property
 ---------------------
 

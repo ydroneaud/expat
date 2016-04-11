@@ -56,7 +56,7 @@
     v2 = ROTL(v2, 32);                                                         \
   } while (0)
 
-int siphash(uint8_t *out, const uint8_t *in, uint64_t inlen, const uint8_t *k) {
+void siphash(uint8_t *out, const uint8_t *in, uint64_t inlen, const uint8_t *k) {
   /* "somepseudorandomlygeneratedbytes" */
   uint64_t v0 = 0x736f6d6570736575ULL;
   uint64_t v1 = 0x646f72616e646f6dULL;
@@ -120,6 +120,6 @@ int siphash(uint8_t *out, const uint8_t *in, uint64_t inlen, const uint8_t *k) {
   b = v0 ^ v1 ^ v2 ^ v3;
   U64TO8_LE(out, b);
 
-  return 0;
+  return;
 }
 

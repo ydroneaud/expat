@@ -15,7 +15,6 @@
    <http://creativecommons.org/publicdomain/zero/1.0/>.
  */
 #include <stdint.h>
-#include <string.h>
 
 /* default: SipHash-2-4 */
 #define cROUNDS 2

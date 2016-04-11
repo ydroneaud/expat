@@ -15,7 +15,6 @@
    <http://creativecommons.org/publicdomain/zero/1.0/>.
  */
 #include <stdint.h>
-#include <stdio.h>
 #include <string.h>
 
 /* default: SipHash-2-4 */
@@ -58,22 +57,6 @@
     v2 = ROTL(v2, 32);                                                         \
   } while (0)
 
-#ifdef DEBUG
-#define TRACE                                                                  \
-  do {                                                                         \
-    printf("(%3d) v0 %08x %08x\n", (int)inlen, (uint32_t)(v0 >> 32),           \
-           (uint32_t)v0);                                                      \
-    printf("(%3d) v1 %08x %08x\n", (int)inlen, (uint32_t)(v1 >> 32),           \
-           (uint32_t)v1);                                                      \
-    printf("(%3d) v2 %08x %08x\n", (int)inlen, (uint32_t)(v2 >> 32),           \
-           (uint32_t)v2);                                                      \
-    printf("(%3d) v3 %08x %08x\n", (int)inlen, (uint32_t)(v3 >> 32),           \
-           (uint32_t)v3);                                                      \
-  } while (0)
-#else
-#define TRACE
-#endif
-
 int siphash(uint8_t *out, const uint8_t *in, uint64_t inlen, const uint8_t *k) {
   /* "somepseudorandomlygeneratedbytes" */
   uint64_t v0 = 0x736f6d6570736575ULL;
@@ -101,7 +84,6 @@ int siphash(uint8_t *out, const uint8_t *in, uint64_t inlen, const uint8_t *k) {
     m = U8TO64_LE(in);
     v3 ^= m;
 
-    TRACE;
     for (i = 0; i < cROUNDS; ++i)
       SIPROUND;
 
@@ -130,7 +112,6 @@ int siphash(uint8_t *out, const uint8_t *in, uint64_t inlen, const uint8_t *k) {
 
   v3 ^= b;
 
-  TRACE;
   for (i = 0; i < cROUNDS; ++i)
     SIPROUND;
 
@@ -142,7 +123,6 @@ int siphash(uint8_t *out, const uint8_t *in, uint64_t inlen, const uint8_t *k) {
   v2 ^= 0xee;
 #endif
 
-  TRACE;
   for (i = 0; i < dROUNDS; ++i)
     SIPROUND;
 
@@ -152,7 +132,6 @@ int siphash(uint8_t *out, const uint8_t *in, uint64_t inlen, const uint8_t *k) {
 #ifdef DOUBLE
   v1 ^= 0xdd;
 
-  TRACE;
   for (i = 0; i < dROUNDS; ++i)
     SIPROUND;
 

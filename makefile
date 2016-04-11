@@ -2,20 +2,14 @@ CC=gcc
 CFLAGS=-Wall 
 SRC=siphash24.c main.c
 BIN=siphash24_test
-BIN_DOUBLE=siphash24_test_double
 
 all:                    $(BIN)
 
 siphash24_test:         $(SRC)
 			$(CC) $(CFLAGS) $^ -o $@
 
-double:                 $(BIN_DOUBLE)
-
-siphash24_test_double:  $(SRC) 
-			$(CC) $(CFLAGS) $^ -o $@ -DDOUBLE
-
 clean:
-			rm -f *.o $(BIN) $(BIN_DOUBLE)
+			rm -f *.o $(BIN)
 
 dist:                   clean
 			cd ..; \

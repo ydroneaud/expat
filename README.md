@@ -49,28 +49,6 @@ Obviously, if the number of rounds is modified then the test vectors
 won't verify.
 
 
-128-bit tags (experimental)
----------------------------
-
-In addition to the original SipHash, which returns 64-bit tags, this
-reference code implements an experimental mode to return 128-bit tags.
-This mode is enabled when the constant `DOUBLE` is defined.
-
-Running 
-
-```sh
-  make double
-```
-
-will build `siphash24_test_double` and `siphash24_debug_double`.
-
-SipHash with 128-bit tags targets PRF security with 128-bit key and
-128-bit tags. In particular, any attack trying up to 2^s should
-succeed with probability at most 2^(s - 128).
-
-The **128-bit mode is experimental**, use at your own risk. 
-
-
 Intellectual property
 ---------------------
 
